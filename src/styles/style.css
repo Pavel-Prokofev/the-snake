@@ -1,0 +1,147 @@
+/* Здесь вы напишете основную часть стилей страницы.
+
+Будьте внимательны! Для корректной работы скриптов на этом сайте нужно, чтобы в HTML некоторые классы были названы особым образом:
+✦ theme-dark — класс тёмной темы
+✦ theme-light — класс светлой темы
+✦ like-icon — для svg-иконки анимированного сердца
+✦ card__like-button — для кнопки Like рядом с иконкой
+✦ card__icon-button — для кнопки, оборачивающей иконку
+✦ card__icon-button — для кнопки, оборачивающей иконку
+✦ is-liked — для обозначения состояния лайкнутой иконки в виде сердца
+✦ button__text — для обозначения текстового элемента внутри кнопки
+
+Кроме этого, не меняйте HTML переключателя тем. Его разметка также гарантирует работу своего скрипта.
+
+*/
+
+.page {
+  min-inline-size: 220px;
+  inline-size: 100dvi;
+  min-block-size: 220px;
+  block-size: 100dvb;
+  display: flex;
+  /* flex-direction: column; */
+  align-items: center;
+  justify-content: center;
+  background-color: var(--background-color, #fff);
+  color: var(--color, #000);
+  font-family: var(--ordinary-font), sans-serif;
+  font-style: normal;
+  font-size: var(--dinamic-font-size);
+  font-weight: var(--ordinary-paragraph-font-weight, 400);
+  line-height: 1.2;
+  background-image:
+    repeating-linear-gradient(var(--background-gradient-line-color, #d3d3d3) 0 4px, transparent 4px 8px),
+    repeating-linear-gradient(90deg, var(--background-gradient-line-color, #d3d3d3) 0 4px, transparent 4px 8px),
+    linear-gradient(var(--background-gradient-start-color, #e7e7e7),
+      var(--background-gradient-end-color, #1a1a1a));
+  background-size: 100dvi 100dvb;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+.game-zone {
+  position: relative;
+}
+
+.score {
+  inline-size: min(var(--dynamic-board-size), var(--maximum-board-size));
+  text-align: center;
+  position: absolute;
+  translate: -50%;
+  inset-inline-start: 50%;
+}
+
+.score_current {
+  inset-block-start: 2%;
+}
+
+.score_highest {
+  inset-block-end: 2%;
+}
+
+.start-screen {
+  inline-size: min(var(--dynamic-board-size), var(--maximum-board-size));
+  block-size: min(var(--dynamic-board-size), var(--maximum-board-size));
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  text-align: center;
+  position: absolute;
+  transform: translateX(-50%) translateY(50%);
+  inset-inline-start: 50%;
+  inset-block-end: 50%;
+  transition: opacity 0.5s linear;
+  opacity: 0;
+}
+
+.start-screen_visible {
+  opacity: 1;
+}
+
+.start-screen__heading {
+  font-size: calc(var(--dinamic-font-size) * 3);
+  text-transform: uppercase;
+  padding-block-start: 2%;
+}
+
+.start-screen__image {
+  inline-size: 50%;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+}
+
+.start-screen__manual {
+  padding-inline: 5%;
+  text-transform: unset;
+}
+
+.start-screen__menu-button {
+  font-size: calc(var(--dinamic-font-size) * 1.5);
+  margin: 5%;
+  padding-block-start: 1%;
+  padding-inline-start: 1%;
+  transform-origin: bottom;
+  outline: 2px solid transparent;
+  outline-offset: 5px;
+  border-radius: 50% / 15%;
+  transition: transform 0.5s linear, outline 0.5s linear, color 0.1s linear;
+}
+
+.start-screen__menu-button:hover:not(:disabled) {
+  transform: scale(1.3);
+}
+
+.start-screen__menu-button:focus-visible:not(:disabled) {
+  outline-color: var(--color);
+}
+
+.start-screen__menu-button:active:not(:disabled) {
+  color: var(--around-board-color);
+}
+
+.start-screen__menu-button:disabled {
+  pointer-events: none;
+}
+
+.game-zone__border {
+  border-width: min(var(--dynamic-border-size), var(--maximum-border-size));
+  border-color: var(--around-board-color);
+  border-style: solid;
+  border-radius: 10%;
+  box-shadow: inset 0 0 0 20px var(--around-board-shadow-color);
+}
+
+.game-zone__board {
+  inline-size: min(var(--dynamic-board-size), var(--maximum-board-size));
+  block-size: min(var(--dynamic-board-size), var(--maximum-board-size));
+  display: grid;
+  grid-template-columns: repeat(24, 1fr);
+  grid-template-rows: repeat(24, 1fr);
+  gap: 1px;
+  background-color: var(--background-color);
+  margin: min(var(--dinamic-board-margin), var(--maximum-board-margin));
+  border: min(var(--dynamic-board-border), var(--maximum-board-border)) solid #000;
+  border-radius: 1%;
+}

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Моя ретроспектива класической игры Snake">
+  <meta name="color-scheme" content="light dark" />
+
+  <title>Snake</title>
+
+  <link rel="icon" href="<%=require('./images/icon/icon.ico')%>" sizes="any">
+  <link rel="apple-touch-icon" href="<%=require('./images/icon/apple-touch-icon.png')%>">
+
+  <meta property="og:title" content="Моя ретроспектива класической игры Snake">
+  <meta property="og:url" content="/">
+  <meta property="og:image" content="<%=require('./images/og-picture.jpg')%>">
+  <meta property="twitter:card" content="summary_large_image">
+
+</head>
+
+<body class="page">
+  <section class="game-zone">
+    <div class="score score_current"><span>Current score: </span><span id="current-score">000</span></div>
+    <div class="score score_highest"><span>Highest score: </span><span id="highest-score">000</span></div>
+    <article class="start-screen start-screen_visible">
+      <h1 class="start-screen__heading">snake</h1>
+      <img src="<%=require('./images/snake.png')%>" alt="snake logo" class="start-screen__image">
+      <span class="start-screen__manual">Press spacebar <br> to start the game</span>
+      <button type="button" class="start-screen__menu-button">menu</button>
+    </article>
+    <div class="game-zone__border">
+      <div class="game-zone__board" id="game-board">
+      </div>
+    </div>
+  </section>
+  <!-- <footer class="footer" aria-label="footer"> -->
+  <!-- <button type="menu-call-button">menu</button> -->
+  <!-- <a href="#" class="link-to-my-github">made by Kirgadan</a> -->
+  <!-- </footer> -->
+</body>
+
+</html>
