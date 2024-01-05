@@ -145,3 +145,11 @@
   border: min(var(--dynamic-board-border), var(--maximum-board-border)) solid #000;
   border-radius: 1%;
 }
+
+.snake {
+  background-color: var(--color);
+}
+
+.food {
+  background-color: var(--around-board-color);
+}
