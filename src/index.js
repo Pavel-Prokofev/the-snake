@@ -1,5 +1,7 @@
 import './index.css';
 
+import {setTheme} from './scripts/set-theme.js';
+
 // Нзначаем HTML константы.
 const board = document.querySelector('#game-board');
 const startScreen = document.querySelector('#start-screen');
