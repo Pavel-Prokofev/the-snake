@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 
 <head>
   <meta charset="UTF-8" />
@@ -23,21 +23,61 @@
   <section class="game-zone">
     <div class="score score_current"><span>Current score: </span><span id="current-score">000</span></div>
     <div class="score score_highest"><span>Highest score: </span><span id="highest-score">000</span></div>
-    <article class="start-screen start-screen_visible" id="start-screen">
+    <article class="start-screen skreen-box skreen-box_visible" id="start-screen">
       <h1 class="start-screen__heading">snake</h1>
       <img src="<%=require('./images/snake.png')%>" alt="snake logo" class="start-screen__image">
       <span class="start-screen__manual">Press spacebar <br> to start the game</span>
-      <button type="button" class="start-screen__menu-button">menu</button>
+      <button type="button" class="start-screen__menu-open-button">menu</button>
     </article>
+    <!-- <article class="menu-screen skreen-box 
+    skreen-box_visible
+    " id="menu-screen">
+      <fieldset class="theme-color fieldset">
+        <legend class="fieldset__legend">Color theme</legend>
+        <div class="fieldset__radio-receiver">
+        <label class="fieldset__label" for="dark">
+          <input type="radio" class="fieldset__radio" name="theme-color" id="dark">
+          Dark
+        </label>
+        <label class="fieldset__label" for="auto">
+          <input type="radio" class="fieldset__radio" name="theme-color" id="auto" checked>
+          Auto
+        </label>
+        <label class="fieldset__label" for="light">
+          <input type="radio" class="fieldset__radio" name="theme-color" id="light">
+          Light
+        </label>
+        </div>
+      </fieldset>
+      <fieldset class="max-speed fieldset">
+        <legend class="fieldset__legend">Max speed</legend>
+        <div class="fieldset__radio-receiver">
+        <label class="fieldset__label" for="easy">
+          <input type="radio" class="fieldset__radio" name="max-speed" id="easy">
+          Easy
+        </label>
+        <label class="fieldset__label" for="normal">
+          <input type="radio" class="fieldset__radio" name="max-speed" id="normal">
+          Normal
+        </label>
+        <label class="fieldset__label" for="hard">
+          <input type="radio" class="fieldset__radio" name="max-speed" id="hard">
+          Hard
+        </label>
+        <label class="fieldset__label" for="impossible">
+          <input type="radio" class="fieldset__radio" name="max-speed" id="impossible">
+          Impossible
+        </label>
+      </div>
+      </fieldset>
+      <span>Press spacebar <br>to return</span>
+      <a href="https://github.com/Pavel-Prokofev/the-snake" class="link-to-my-github" target="_blank" rel="noopener noreferrer">made by Kirgadan</a>
+    </article> -->
     <div class="game-zone__border">
       <div class="game-zone__board" id="game-board">
       </div>
     </div>
   </section>
-  <!-- <footer class="footer" aria-label="footer"> -->
-  <!-- <button type="menu-call-button">menu</button> -->
-  <!-- <a href="#" class="link-to-my-github">made by Kirgadan</a> -->
-  <!-- </footer> -->
 </body>
 
 </html>

@@ -88,7 +88,7 @@ const increaseTheSpeed = () => {
 const stopGame = () => {
   clearInterval(gameInterval);
   gameStarted = false;
-  startScreen.classList.add('start-screen_visible');
+  startScreen.classList.add('skreen-box_visible');
   board.innerHTML = '';
 };
 
@@ -175,7 +175,7 @@ const move = () => {
 // Функция запуска игры
 const startGame = () => {
   gameStarted = true; // Флаг начатой игры.
-  startScreen.classList.remove('start-screen_visible');
+  startScreen.classList.remove('skreen-box_visible');
   generateFood(); // Определяем место генерации первой еды.
   gameInterval = setInterval(() => {
     move(); // Сдвинулись.
