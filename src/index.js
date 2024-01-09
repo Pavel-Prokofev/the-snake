@@ -1,10 +1,12 @@
 import './index.css';
 
-import {setTheme} from './scripts/set-theme.js';
+import { setTheme } from './scripts/set-theme.js';
 
 // Нзначаем HTML константы.
 const board = document.querySelector('#game-board');
 const startScreen = document.querySelector('#start-screen');
+const menuScreen = document.querySelector('#menu-screen');
+const gameOverScreen = document.querySelector('#game-over-screen');
 const currentScore = document.querySelector('#current-score');
 const highestScore = document.querySelector('#highest-score');
 
@@ -20,6 +22,7 @@ let direction = 'right';
 let gameInterval;
 let gameSpeedDelay = 200;
 let gameStarted = false;
+let menuOpen = false;
 
 
 // Определение позиции змеи или еды.
@@ -53,9 +56,9 @@ const generateFood = () => {
 
 //  Рисуем еду.
 const drawFood = () => {
-    const foodElement = createGameElement('div', 'food');
-    setPosition(foodElement, food);
-    board.appendChild(foodElement);
+  const foodElement = createGameElement('div', 'food');
+  setPosition(foodElement, food);
+  board.appendChild(foodElement);
 };
 
 // Рисуем игровую карту, змею и еду.
@@ -88,8 +91,10 @@ const increaseTheSpeed = () => {
 
 // Функция остановки игры.
 const stopGame = () => {
-  clearInterval(gameInterval);
+  // clearInterval(gameInterval);
+  // clearTimeout(gameOver);
   gameStarted = false;
+  gameOverScreen.classList.remove('skreen-box_visible');
   startScreen.classList.add('skreen-box_visible');
   board.innerHTML = '';
 };
@@ -117,8 +122,6 @@ const resetGame = () => {
   direction = 'right';
   gameSpeedDelay = 200;
   updateScore();
-  console.log(test.innerHTML);
-  console.log(board.innerHTML);
 };
 
 // Проверка столкновений со стеной и с самим собой.
@@ -126,13 +129,17 @@ const checkCollision = () => {
   const head = snake[0];
   // Столкновение со стеной.
   if (head.x < 1 || head.x > gridSize || head.y < 1 || head.y > gridSize) {
-    resetGame();
+    clearInterval(gameInterval);
+    gameOverScreen.classList.add('skreen-box_visible');
+    let gameOver = setTimeout(resetGame, 5000);
   };
   // Столкновение с хвоcтом.
   if (snake.length > 3) {
     for (let i = 3; i < snake.length; i++) {
       if (head.x === snake[i].x && head.y === snake[i].y) {
-        resetGame();
+        clearInterval(gameInterval);
+        gameOverScreen.classList.add('skreen-box_visible');
+        let gameOver = setTimeout(resetGame, 5000);
       };
     };
   };
@@ -186,11 +193,24 @@ const startGame = () => {
   }, gameSpeedDelay);
 };
 
+const openedMenu = () => {
+  startScreen.classList.remove('skreen-box_visible');
+  menuScreen.classList.add('skreen-box_visible');
+  menuOpen = true;
+}
+
+const closedMenu = () => {
+  menuScreen.classList.remove('skreen-box_visible');
+  startScreen.classList.add('skreen-box_visible');
+  menuOpen = false;
+}
+
 // Обработчик слушателя кликов.
 const handleKeyPress = (evt) => {
-  if (!gameStarted && (evt.code === 'Spase' || evt.key === ' ')) {
+  if (!gameStarted && (evt.code === 'Spase' || evt.key === ' ') && !menuOpen) {
     startGame();
-  } else {
+    return;
+  } else if (gameStarted) {
     switch (evt.key) {
       case 'ArrowUp':
       case 'W':
@@ -230,4 +250,13 @@ const handleKeyPress = (evt) => {
   };
 };
 
+const handleClick = (evt) => {
+  if ((evt.target.id === 'menu-open-button') && !gameStarted && !menuOpen) {
+    openedMenu();
+  } else if ((evt.target.id === 'menu-close-button') && !gameStarted && menuOpen) {
+    closedMenu();
+  }
+}
+
 document.addEventListener('keydown', handleKeyPress);
+document.addEventListener('click', handleClick);
