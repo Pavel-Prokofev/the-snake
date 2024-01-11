@@ -7,6 +7,7 @@ import { snakeSpeed } from './scripts/speed-chang.js';
 const board = document.querySelector('#game-board');
 const startScreen = document.querySelector('#start-screen');
 const menuScreen = document.querySelector('#menu-screen');
+const pauseScreen = document.querySelector('#pause-screen');
 const gameOverScreen = document.querySelector('#game-over-screen');
 const currentScore = document.querySelector('#current-score');
 const highestScore = document.querySelector('#highest-score');
@@ -23,6 +24,7 @@ let direction = 'right';
 let gameInterval;
 let gameStarted = false;
 let menuOpen = false;
+let pause = false;
 
 
 // Определение позиции змеи или еды.
@@ -51,7 +53,7 @@ const drawSnake = () => {
 const generateFood = () => {
   const x = Math.floor(Math.random() * gridSize) + 1;
   const y = Math.floor(Math.random() * gridSize) + 1;
-  food = { x, y };
+  return { x, y };
 };
 
 //  Рисуем еду.
@@ -148,7 +150,7 @@ const move = () => {
   snake.unshift(head); // Добавляем на первое место в масиве новый по направлению движения.
   if (head.x === food.x && head.y === food.y) {
     // при "поедании" пропускаем удаление конца змеи, чтобы её удлинить.
-    generateFood(); // Генерируем новые координаты еды.
+    food = generateFood(); // Генерируем новые координаты еды.
     clearInterval(gameInterval); // Удаляем последний интервал дабы избежать наложений и ошибок.
     snakeSpeed.increaseTheSpeed(); // Увеличиваем скорость движения уменьшая интервал.
     gameInterval = setInterval(() => {
@@ -165,7 +167,7 @@ const move = () => {
 const startGame = () => {
   gameStarted = true; // Флаг начатой игры.
   startScreen.classList.remove('skreen-box_visible');
-  generateFood(); // Определяем место генерации первой еды.
+  food = generateFood(); // Определяем место генерации первой еды.
   gameInterval = setInterval(() => {
     move(); // Сдвинулись.
     checkCollision(); // Проверка столкновений.
@@ -187,10 +189,22 @@ const closedMenu = () => {
 
 // Обработчик слушателя кликов.
 const handleKeyPress = (evt) => {
-  if (!gameStarted && (evt.code === 'Spase' || evt.key === ' ') && !menuOpen) {
+  if (!gameStarted && (evt.code === 'Spase' || evt.key === ' ') && !menuOpen && !pause) {
     startGame();
-    return;
-  } else if (gameStarted) {
+  } else if (gameStarted && (evt.code === 'Spase' || evt.key === ' ') && !menuOpen && !pause) {
+    clearInterval(gameInterval); // Удаляем последний интервал дабы избежать наложений и ошибок.
+    pause = true;
+    pauseScreen.classList.add('skreen-box_visible');
+  }
+  else if (gameStarted && (evt.code === 'Spase' || evt.key === ' ') && !menuOpen && pause) {
+    gameInterval = setInterval(() => {
+      move(); // Сдвинулись.
+      checkCollision(); // Проверка столкновений.
+      draw(); // Отрисовали.
+    }, snakeSpeed.gameSpeedDelay);
+    pause = false;
+    pauseScreen.classList.remove('skreen-box_visible');
+  } else if (gameStarted && !pause) {
     switch (evt.key) {
       case 'ArrowUp':
       case 'W':

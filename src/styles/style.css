@@ -40,6 +40,11 @@
   background-attachment: fixed;
 }
 
+.heading {
+  font-size: calc(var(--dinamic-font-size) * 3);
+  text-transform: uppercase;
+}
+
 .game-zone {
   position: relative;
 }
@@ -85,8 +90,6 @@
 }
 
 .start-screen__heading {
-  font-size: calc(var(--dinamic-font-size) * 3);
-  text-transform: uppercase;
   padding-block-start: 2%;
 }
 
@@ -184,11 +187,6 @@
 
 .link-to-my-github:focus-visible {
   color: var(--around-board-color);
-}
-
-.game-over-screen__heading {
-  font-size: calc(var(--dinamic-font-size) * 3);
-  text-transform: uppercase;
 }
 
 .game-zone__border {
