@@ -1,6 +1,7 @@
 import './index.css';
 
 import { setTheme } from './scripts/set-theme.js';
+import { snakeSpeed } from './scripts/speed-chang.js';
 
 // Нзначаем HTML константы.
 const board = document.querySelector('#game-board');
@@ -20,7 +21,6 @@ let food;
 let actualHighestScore = 0;
 let direction = 'right';
 let gameInterval;
-let gameSpeedDelay = 200;
 let gameStarted = false;
 let menuOpen = false;
 
@@ -71,28 +71,8 @@ const draw = () => {
   };
 };
 
-
-// Функция увеличения скорости движения.
-const increaseTheSpeed = () => {
-  if (gameSpeedDelay > 180) {
-    gameSpeedDelay -= 5;
-  } else if (gameSpeedDelay > 160) {
-    gameSpeedDelay -= 4;
-  } else if (gameSpeedDelay > 120) {
-    gameSpeedDelay -= 3;
-  } else if (gameSpeedDelay > 80) {
-    gameSpeedDelay -= 2;
-  } else if (gameSpeedDelay > 40) {
-    gameSpeedDelay -= 1;
-  } else if (gameSpeedDelay > 20) {
-    gameSpeedDelay -= 0.5;
-  };
-};
-
 // Функция остановки игры.
 const stopGame = () => {
-  // clearInterval(gameInterval);
-  // clearTimeout(gameOver);
   gameStarted = false;
   gameOverScreen.classList.remove('skreen-box_visible');
   startScreen.classList.add('skreen-box_visible');
@@ -120,7 +100,7 @@ const resetGame = () => {
   stopGame();
   snake = [{ x: startPosition, y: startPosition }];
   direction = 'right';
-  gameSpeedDelay = 200;
+  snakeSpeed.speedReset();
   updateScore();
 };
 
@@ -170,12 +150,12 @@ const move = () => {
     // при "поедании" пропускаем удаление конца змеи, чтобы её удлинить.
     generateFood(); // Генерируем новые координаты еды.
     clearInterval(gameInterval); // Удаляем последний интервал дабы избежать наложений и ошибок.
-    increaseTheSpeed(); // Увеличиваем скорость движения уменьшая интервал.
+    snakeSpeed.increaseTheSpeed(); // Увеличиваем скорость движения уменьшая интервал.
     gameInterval = setInterval(() => {
       move(); // Сдвинулись.
       checkCollision(); // Проверка столкновений.
       draw(); // Отрисовали.
-    }, gameSpeedDelay);
+    }, snakeSpeed.gameSpeedDelay);
   } else {
     snake.pop(); // Удаляем последний элемент змейки.
   };
@@ -190,7 +170,7 @@ const startGame = () => {
     move(); // Сдвинулись.
     checkCollision(); // Проверка столкновений.
     draw(); // Отрисовали.
-  }, gameSpeedDelay);
+  }, snakeSpeed.gameSpeedDelay);
 };
 
 const openedMenu = () => {

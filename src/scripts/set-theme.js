@@ -1,13 +1,13 @@
 export const setTheme = (() => {
-  function changeTheme(theme) {
+  const changeTheme = (theme) => {
     document.documentElement.className = '';
     document.documentElement.classList.add(`snake-theme-${theme}`);
+    document.querySelector(`#${theme}`).checked = 1;
     localStorage.setItem('snake-theme', theme);
   }
 
-  (function initTheme() {
+  const initTheme = ( () => {
     const theme = localStorage.getItem('snake-theme');
-
     if (theme) {
       changeTheme(theme);
     }
@@ -18,9 +18,6 @@ export const setTheme = (() => {
     const themeChecks = document.querySelector('.theme-color').querySelectorAll('.fieldset__radio');
 
     themeChecks.forEach((check) => {
-      if (check.getAttribute('id') === localStorage.getItem('snake-theme')) {
-        check.checked = 1;
-      }
       check.onclick = () => {
         changeTheme(check.getAttribute('id'));
       };
