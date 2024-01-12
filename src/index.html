@@ -23,12 +23,14 @@
   <section class="game-zone">
     <div class="score score_current"><span>Current score: </span><span id="current-score">000</span></div>
     <div class="score score_highest"><span>Highest score: </span><span id="highest-score">000</span></div>
+
     <article class="start-screen skreen-box skreen-box_visible" id="start-screen">
       <h1 class="start-screen__heading heading">snake</h1>
       <img src="<%=require('./images/snake.png')%>" alt="snake logo" class="start-screen__image">
       <span class="start-screen__manual">Press spacebar <br> to start or pause</span>
       <button type="button" class="menu-button" id="menu-open-button">menu</button>
     </article>
+
     <article class="menu-screen skreen-box" id="menu-screen">
       <fieldset class="theme-color fieldset">
         <legend class="fieldset__legend">Color theme</legend>

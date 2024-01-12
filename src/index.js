@@ -19,6 +19,7 @@ const gridSize = 24;
 const startPosition = Math.floor(gridSize / 2);
 let snake = [{ x: startPosition, y: startPosition }];
 let food;
+let bonusFood;
 let actualHighestScore = 0;
 let direction = 'right';
 let gameInterval;
@@ -51,8 +52,21 @@ const drawSnake = () => {
 
 // Генерим еду в случайном месте.
 const generateFood = () => {
-  const x = Math.floor(Math.random() * gridSize) + 1;
-  const y = Math.floor(Math.random() * gridSize) + 1;
+  let x = Math.floor(Math.random() * gridSize) + 1;
+  let y = Math.floor(Math.random() * gridSize) + 1;
+  let unique = false;
+  while (!unique) {
+    if (snake.every(item => ((item.x !== x) && (item.y !== y)))
+      && (food ? ((food.x !== x) && (food.y !== y)) : true)
+      && (bonusFood ? ((bonusFood.x !== x) && (bonusFood.y !== y)) : true)
+    ) {
+      unique = true;
+    } else {
+
+      x = Math.floor(Math.random() * gridSize) + 1;
+      y = Math.floor(Math.random() * gridSize) + 1;
+    };
+  }
   return { x, y };
 };
 
@@ -191,7 +205,8 @@ const closedMenu = () => {
 const handleKeyPress = (evt) => {
   if (!gameStarted && (evt.code === 'Spase' || evt.key === ' ') && !menuOpen && !pause) {
     startGame();
-  } else if (gameStarted && (evt.code === 'Spase' || evt.key === ' ') && !menuOpen && !pause) {
+  } else if (gameStarted && (evt.code === 'Spase' || evt.key === ' ') && !menuOpen && !pause
+    && !gameOverScreen.classList.contains('skreen-box_visible')) {
     clearInterval(gameInterval); // Удаляем последний интервал дабы избежать наложений и ошибок.
     pause = true;
     pauseScreen.classList.add('skreen-box_visible');
