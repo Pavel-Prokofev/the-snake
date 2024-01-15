@@ -17,11 +17,17 @@ const test = document.querySelector('.game-zone__border');
 // Назначаем игровые переменные.
 const gridSize = 24;
 const startPosition = Math.floor(gridSize / 2);
-let snake = [{ x: startPosition, y: startPosition }];
+let snake = [{ x: startPosition, y: startPosition }, { x: startPosition, y: startPosition + 1 }];
 let food;
 let bonusFood;
-let actualHighestScore = 0;
+
+
+let actualHighestScore = localStorage.getItem('snake-highest-score') || 0;
+highestScore.textContent = actualHighestScore.toString().padStart(3, '0'); // !!! Не забыть при рефакторинге вынести вместе со всем счётом в отдельный блок !!!
+console.log(actualHighestScore)
 let bonusScore = 0;
+
+
 let direction = 'up';
 let gameInterval;
 let gameStarted = false;
@@ -99,7 +105,7 @@ const drawFood = () => {
 
 // Рисуем игровую карту, змею и еду.
 const draw = () => {
-  if (gameStarted) {
+  if (gameStarted && !gameOverScreen.classList.contains('skreen-box_visible')) {
     board.innerHTML = ''; // Перезагружаем содержимое поля перед следующей итерацией.
     drawSnake(); // Вызываем функцию отрисовки змеи.
     drawFood(); // Вызываем функцию отрисовки еды.
@@ -117,16 +123,17 @@ const stopGame = () => {
 
 // Функция обновления максимального счёта.
 const updateHighestScore = () => {
-  const actualCurrentScore = snake.length - 1;
+  const actualCurrentScore = snake.length - 2 + bonusScore;
   if (actualHighestScore < actualCurrentScore) {
     actualHighestScore = actualCurrentScore;
+    localStorage.setItem('snake-highest-score', actualCurrentScore);
     highestScore.textContent = actualHighestScore.toString().padStart(3, '0');
   }
 };
 
 // Функция обновления текущего счёта.
 const updateScore = () => {
-  const actualCurrentScore = snake.length - 1 + bonusScore;
+  const actualCurrentScore = snake.length - 2 + bonusScore;
   currentScore.textContent = actualCurrentScore.toString().padStart(3, '0');
 };
 
@@ -135,7 +142,7 @@ const updateScore = () => {
 const resetGame = () => {
   updateHighestScore();
   stopGame();
-  snake = [{ x: startPosition, y: startPosition }];
+  snake = [{ x: startPosition, y: startPosition }, { x: startPosition, y: startPosition + 1 }];
   direction = 'up';
   snakeSpeed.speedReset();
   bonusScore = 0;
@@ -184,7 +191,9 @@ const move = () => {
   };
   // Создаём иллюзию движения.
   snake.unshift(head); // Добавляем на первое место в масиве новый по направлению движения.
-  if (head.x === food.x && head.y === food.y) {
+  if (head.x === food.x && head.y === food.y) { //Покушали
+
+    // Бонус за еду у бортика.
     if (food.x === 1 || food.y === 1 || food.x === gridSize || food.y === gridSize) {
       bonusScore += 1;
       if ((food.x === 1 && food.y === 1)
@@ -194,6 +203,7 @@ const move = () => {
         bonusScore += 1;
       };
     }
+
     // при "поедании" пропускаем удаление конца змеи, чтобы её удлинить.
     food = generateFood(); // Генерируем новые координаты еды.
     clearInterval(gameInterval); // Удаляем последний интервал дабы избежать наложений и ошибок.
