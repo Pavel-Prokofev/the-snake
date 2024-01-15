@@ -26,4 +26,4 @@ __Как собирать__
 3. npm run dev - запускает режим разработчика
 4. npm run build - собирает проект
 
-* [Ссылка на сайт проекта: The Snake]() 
+* [Ссылка на сайт проекта: The Snake](https://the-snake-brown.vercel.app/) 
